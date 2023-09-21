@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.coop1.ui.theme.CoOp1Theme
 
 
+
 class Receiving : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +24,13 @@ class Receiving : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting2("testing commit")
+                    val receivedUser = intent.getSerializableExtra("user") as? User
+                    if(receivedUser != null){
+                        val username = receivedUser.username
+                        val email = receivedUser.email
+
+                        Greeting2(username, email)
+                    }
                 }
             }
         }
@@ -31,17 +38,17 @@ class Receiving : ComponentActivity() {
 }
 
 @Composable
-fun Greeting2(name: String, modifier: Modifier = Modifier) {
+fun Greeting2(userName: String, email: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name!",
+        text = "Hello $userName!, with this email $email",
         modifier = modifier
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview2() {
-    CoOp1Theme {
-        Greeting2("Android")
-    }
+fun ReceivedPreview(){
+    val receivedUsername = "Testing Name"
+    val receivedEmail = "email"
+    Greeting2(receivedUsername, receivedEmail)
 }
