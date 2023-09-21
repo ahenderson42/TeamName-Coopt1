@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Co Op 1</string>
+    <string name="title_activity_receiving">Receiving</string>
 </resources>
