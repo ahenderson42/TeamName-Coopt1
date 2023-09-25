@@ -36,6 +36,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    //calling the coopActivity() function
                     CoopActivity()
                 }
             }
@@ -43,6 +44,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+//add new values to this class to pass to the receiving activity
 data class User(
     val username: String,
     val email: String
@@ -53,9 +55,11 @@ data class User(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CoopActivity() {
+    //creating generic values for that will be remebered while the activity is stopped
     var username by rememberSaveable { mutableStateOf("")}
     var email by rememberSaveable { mutableStateOf("")}
 
+    //creating a context for the current composable
     val context = LocalContext.current
 
     Column(
@@ -98,6 +102,7 @@ fun CoopActivity() {
 
                 val user = User(username, email)
 
+                //creating the intent and passing in the user data using context
                 val intent = Intent(context, Receiving::class.java)
                 intent.putExtra("user", user as Serializable)
                 context.startActivity(intent)
