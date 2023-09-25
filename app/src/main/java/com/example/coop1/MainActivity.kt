@@ -6,10 +6,13 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -45,7 +48,8 @@ class MainActivity : ComponentActivity() {
 
 data class User(
     val username: String,
-    val email: String
+    val email: String,
+    val checked: Boolean
 ): Serializable
 
 
@@ -55,6 +59,7 @@ data class User(
 fun CoopActivity() {
     var username by rememberSaveable { mutableStateOf("")}
     var email by rememberSaveable { mutableStateOf("")}
+    var checked by rememberSaveable { mutableStateOf(false) }
 
     val context = LocalContext.current
 
@@ -86,17 +91,26 @@ fun CoopActivity() {
                 .padding(8.dp)
         )
 
+
+        Row {
+            Checkbox(
+                checked = checked,
+                onCheckedChange = { newChecked: Boolean -> checked = newChecked }
+            )
+        }
+
+
         Button(
             onClick = {
-                val message = "Username = $username, email = $email"
+                val message = "Username = $username, email = $email, checked = $checked"
 
                 Toast.makeText(
                     context,
                     message,
-                    Toast.LENGTH_SHORT
+                    Toast.LENGTH_LONG
                 ).show()
 
-                val user = User(username, email)
+                val user = User(username, email, checked)
 
                 val intent = Intent(context, Receiving::class.java)
                 intent.putExtra("user", user as Serializable)
