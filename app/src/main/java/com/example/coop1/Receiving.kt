@@ -67,7 +67,7 @@ fun Greeting2(
             .padding(16.dp)
     ){
         Text(
-            text = "Hello $userName!, with this email $email",
+            text = "Hello $userName! Your email is: $email",
             modifier = modifier
         )
         if (checked) {
@@ -95,7 +95,8 @@ fun ReceivedPreview(){
     val receivedUsername = "Testing Name"
     val receivedEmail = "email"
     val receivedChecked = true
-    Greeting2(receivedUsername, receivedEmail, receivedChecked, selected = 0){
+    val selected = 2
+    Greeting2(receivedUsername, receivedEmail, receivedChecked, selected){
         // This is a dummy action, it does nothing
     }
 }
