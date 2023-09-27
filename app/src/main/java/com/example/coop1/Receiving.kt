@@ -29,17 +29,19 @@ class Receiving : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    //This is to suppress the intent.getSerializableExtra depreciated warning
                     @Suppress("DEPRECATION")
                     val receivedUser = intent.getSerializableExtra("user") as? User
                     if(receivedUser != null){
                         val username = receivedUser.username
                         val email = receivedUser.email
+                        val checked = receivedUser.checked
+                        val selected = receivedUser.selected
 
                         Greeting2(
                             username,
-                            email) {
-                            //instructions for the button in Greeting2() to go back to the MainActivity
+                            email,
+                            checked,
+                            selected) {
                             val intent = Intent(this@Receiving, MainActivity::class.java)
                             startActivity(intent)
                         }
@@ -54,6 +56,8 @@ class Receiving : ComponentActivity() {
 fun Greeting2(
     userName: String,
     email: String,
+    checked: Boolean,
+    selected: Int,
     modifier: Modifier = Modifier,
     onButtonClick: () -> Unit
 ) {
@@ -63,8 +67,16 @@ fun Greeting2(
             .padding(16.dp)
     ){
         Text(
-            text = "Hello $userName!, with this email $email",
+            text = "Hello $userName! Your email is: $email",
             modifier = modifier
+        )
+        if (checked) {
+            Text(text = "You checked the box")
+        } else {
+            Text(text = "You did *not* check the box")
+        }
+        Text(
+            text = "Option selected: $selected"
         )
         Button(
             onClick = onButtonClick
@@ -82,7 +94,9 @@ fun Greeting2(
 fun ReceivedPreview(){
     val receivedUsername = "Testing Name"
     val receivedEmail = "email"
-    Greeting2(receivedUsername, receivedEmail){
+    val receivedChecked = true
+    val selected = 2
+    Greeting2(receivedUsername, receivedEmail, receivedChecked, selected){
         // This is a dummy action, it does nothing
     }
 }
