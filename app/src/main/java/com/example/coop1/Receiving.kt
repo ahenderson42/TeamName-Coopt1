@@ -35,11 +35,13 @@ class Receiving : ComponentActivity() {
                         val username = receivedUser.username
                         val email = receivedUser.email
                         val checked = receivedUser.checked
+                        val selected = receivedUser.selected
 
                         Greeting2(
                             username,
                             email,
-                            checked) {
+                            checked,
+                            selected) {
                             val intent = Intent(this@Receiving, MainActivity::class.java)
                             startActivity(intent)
                         }
@@ -55,6 +57,7 @@ fun Greeting2(
     userName: String,
     email: String,
     checked: Boolean,
+    selected: Int,
     modifier: Modifier = Modifier,
     onButtonClick: () -> Unit
 ) {
@@ -72,6 +75,9 @@ fun Greeting2(
         } else {
             Text(text = "You did *not* check the box")
         }
+        Text(
+            text = "Option selected: $selected"
+        )
         Button(
             onClick = onButtonClick
         ) {
@@ -89,7 +95,7 @@ fun ReceivedPreview(){
     val receivedUsername = "Testing Name"
     val receivedEmail = "email"
     val receivedChecked = true
-    Greeting2(receivedUsername, receivedEmail, receivedChecked){
+    Greeting2(receivedUsername, receivedEmail, receivedChecked, selected = 0){
         // This is a dummy action, it does nothing
     }
 }
